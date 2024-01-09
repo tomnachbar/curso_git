@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 
-import src.answers as asw
+from src import answers as asw
 
 from src.extraction import load_data
 
