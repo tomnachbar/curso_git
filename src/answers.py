@@ -1,5 +1,6 @@
-from io import BytesIO
 
+from io import BytesIO
+import io
 import pandas as pd
 import plotly.express as px
 import streamlit as st
@@ -259,18 +260,14 @@ def rd3_question_7(df):
 
 
 def to_excel(df):
-    output = BytesIO()
+    output = io.BytesIO()
 
-    writer = pd.ExcelWriter(output, engine="xlsxwriter")
-
-    df.to_excel(writer, index=False, sheet_name="Sheet1")
-
-    worksheet = writer.sheets["Sheet1"]
-
-    worksheet.set_column("A:A", None)
-
-    writer.save()
+    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+        df.to_excel(writer, index=False, sheet_name='Sheet1')
+        worksheet = writer.sheets['Sheet1']
+        worksheet.set_column('A:A', None)
 
     processed_data = output.getvalue()
-
     return processed_data
+
+
